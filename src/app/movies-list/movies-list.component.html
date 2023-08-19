@@ -1,0 +1,70 @@
+<div class="container-fluid mt-3"
+    infiniteScroll
+    [infiniteScrollDistance]="1"
+    [infiniteScrollThrottle]="1000"
+    (scrolled)="getMoviesList()"
+>
+	<div class="d-flex justify-content-between header">
+        <h1>Top Movies</h1>
+        <h1 class="c-pointer"><i class="bi bi-person-fill" (click)="logout()"></i></h1>
+    </div>
+    <!-- <p class="text-center logout"><a (click)="logout()">Logout</a></p> -->
+	<div class="row justify-content-center mt-5">
+        <ng-container *ngFor="let item of moviesList">
+            <div class="card movie_card" (click)="open(template, item)">
+                <img src="https://ui-avatars.com/api/?size=300&name={{ item.title }}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.title }}</h5>
+                        <span class="movie_info" [title]="item.description">{{ item.description }}</span>
+                    <strong>{{ item.genres }}</strong>
+                </div>
+            </div>
+        </ng-container>
+        <div class="text-center mt-5" *ngIf="loader">
+            <div class="spinner-grow text-primary" role="status">
+                <span class="sr-only"></span>
+            </div>
+            <div class="spinner-grow text-secondary" role="status">
+                <span class="sr-only"></span>
+            </div>
+            <div class="spinner-grow text-success" role="status">
+                <span class="sr-only"></span>
+            </div>
+            <div class="spinner-grow text-danger" role="status">
+                <span class="sr-only"></span>
+            </div>
+            <div class="spinner-grow text-warning" role="status">
+                <span class="sr-only"></span>
+            </div>
+            <div class="spinner-grow text-info" role="status">
+                <span class="sr-only"></span>
+            </div>
+            <div class="spinner-grow text-dark" role="status">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ng-template #template>
+	<div class="modal-header">
+		<h4 class="modal-title" id="modal-basic-title">{{ movieDetails?.title }}</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modalRef?.hide()"></button>
+	</div>
+	<div class="modal-body">
+		<div class="row">
+            <div class="col-sm-7" id="show-movie-image">
+                <img src="https://ui-avatars.com/api/?size=512&bold=true&name={{ movieDetails?.title }}" class="img-fluid">
+            </div>
+            <div class="col-sm-5">
+                <p id="show-movie-description">
+                    {{ movieDetails?.description}}
+                </p>
+                <strong>{{ movieDetails?.genres }}</strong>
+            </div>
+        </div>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-outline-dark" (click)="modalRef?.hide()">Close</button>
+	</div>
+</ng-template>
